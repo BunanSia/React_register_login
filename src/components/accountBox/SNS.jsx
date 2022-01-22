@@ -46,13 +46,11 @@ export function SNS(props){
 
       <column>
           <FacebookLogin className="BtnFacebook"
-              appId="4699337046853944" 
+              appId="" 
               fields="name,email,picture"
               autoLoad={false}
               callback={responseFacebook} 
               cssClass="btnFacebook"
-              icon={<i className="fa fa-facebook" style={{marginLeft:'5px'}} src={fbisshown?facebookhover:facebook}></i>}
-              // textButton = "&nbsp;&nbsp;Sign Up with Facebook"
               render={renderProps=>(
                 <Button
                   onClick={renderProps.onClick}        
@@ -65,7 +63,7 @@ export function SNS(props){
             </FacebookLogin>          
           
           <GoogleLogin
-            clientId="1990332421-40as7rd9thobeb4d4kmci0k86u8sd4bo.apps.googleusercontent.com" //CLIENTID NOT CREATED YET
+            clientId="" //CLIENTID NOT CREATED YET
             onSuccess={responseGoogle}
             onFailure={responseGoogle}
             className="btnGoogle"
