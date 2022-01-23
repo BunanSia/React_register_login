@@ -8,11 +8,13 @@ import {
   MutedLink,
   SubmitButton,
 } from "./common";
+import {useEffect} from "react";
 import { Marginer } from "../marginer";
 import { AccountContext } from "./accountContext";
 import styled from "styled-components";
 import check from "./images/check.png";
 import uncheck from "./images/uncheck.png";
+import "./index.css";
 
 const Terms = styled.h5`
   width: 250px;
@@ -62,18 +64,17 @@ export function SignupForm(props) {
   // checks all validations are true
   const [allValid, setAllValid] = useState(false)
   const [terms,setTerms]=useState(false)
-  // labels and state boolean corresponding to each validation
-  const checkTerms=() => {
-    setTerms(true)
+  // Client shall check on the terms otherwise submit button is disabled
+  const checkTerms=(e) => {
+    setTerms(e.target.checked)
   }
-
   const validatePassword = () => {
     // has number
     if (/\d/.test(passwordOne)) setContainsN(true)
     else setContainsN(false)
 
     // has 8 characters
-    if (passwordOne.length >= 8) setContains8C(true)
+    if (passwordOne.length > 7) setContains8C(true)
     else setContains8C(false)
 
      // all validations passed
@@ -85,6 +86,12 @@ export function SignupForm(props) {
     alert('Submitted' );
     e.preventDefault();
   }
+
+  // const Allvalidtext=(allValid)?(<div>Allvalid</div>):(<div>:Not allvalid</div>)
+  useEffect(()=>{
+    validatePassword()
+  },[passwordOne,terms,contains8C,containsN,validatePassword]
+  );
 
   return (
     <BoxContainer>
@@ -105,12 +112,15 @@ export function SignupForm(props) {
             </Condition>
           </column>
           <column>
-            <Checkbox>
-              <input type="checkbox" onClick={checkTerms}></input>
-            </Checkbox>
-            <Terms align='left'>By creating account, you agree to accept our Privacy policy, Terms of Service and Notification settings.</Terms>
+          <p class="font2">    
+          <lable><input type="checkbox" onClick={(e)=>checkTerms(e)}/>
+                <span>By creating account, you agree to accept our Privacy 
+                policy, Terms of Service and Notification settings.
+                </span>
+              </lable>
+          </p>
           </column>
-          
+          <Marginer direction="vertical" margin={10} />  
           <Marginer direction="vertical" margin={10} />  
           <SubmitButton type="submit" value="Submit" disabled={!allValid}>Signup</SubmitButton>
         </FormContainer>
